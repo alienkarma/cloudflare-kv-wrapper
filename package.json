@@ -1,0 +1,36 @@
+{
+  "name": "cloudflare-kv-wrapper",
+  "version": "0.1.0",
+  "description": "A javascript/typescript wrapper for Cloudflare's KV namespaces using REST API",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alienkarma/cloudflare-kv-wrapper.git"
+  },
+  "keywords": [
+    "cloudflare",
+    "kv"
+  ],
+  "author": {
+    "name": "Abhishek Karmakar",
+    "url": "https://github.com/alienkarma"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alienkarma/cloudflare-kv-wrapper/issues"
+  },
+  "homepage": "https://github.com/alienkarma/cloudflare-kv-wrapper#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4"
+  }
+}
