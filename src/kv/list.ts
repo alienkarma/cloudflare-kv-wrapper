@@ -41,7 +41,7 @@ export default async ({
   const queryString = query.length === 0 ? "" : "?" + query.join("&");
 
   const url =
-    ENDPOINTS.KEY.LIST.replace("{account_id}", accountId).replace(
+    ENDPOINTS.KV_PAIR.LIST.replace("{account_id}", accountId).replace(
       "{namespace_id}",
       namespaceId
     ) + queryString;

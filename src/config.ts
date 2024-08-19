@@ -12,11 +12,9 @@ export const ENDPOINTS = {
     GET: `${NAMESPACE_ENDPOINT}`,
     RENAME: `${NAMESPACE_ENDPOINT}`,
   },
-  KEY: {
+  KV_PAIR: {
     LIST: `${NAMESPACE_ENDPOINT}/keys`,
     METADATA: `${NAMESPACE_ENDPOINT}/metadata/{key_name}`,
-  },
-  KV_PAIR: {
     MULTI: {
       DELETE: `${KV_PAIRS_BULK_ENDPOINT}`,
       WRITE: `${KV_PAIRS_BULK_ENDPOINT}`,

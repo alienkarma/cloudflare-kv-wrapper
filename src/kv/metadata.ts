@@ -20,7 +20,7 @@ export default async ({
   namespaceId,
   keyName,
 }: Metadata): Promise<Response<MetadataResponse>> => {
-  const url = ENDPOINTS.KEY.METADATA.replace("{account_id}", accountId)
+  const url = ENDPOINTS.KV_PAIR.METADATA.replace("{account_id}", accountId)
     .replace("{namespace_id}", namespaceId)
     .replace("{key_name}", keyName);
 

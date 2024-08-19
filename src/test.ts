@@ -1,9 +1,6 @@
 import * as dotenv from "dotenv";
 import { describe, test, expect } from "@jest/globals";
-import namespace from "./namespace";
-import kv_pair from "./kv_pair";
-import kv_pair_multi from "./kv_pair/multi";
-import key from "./key";
+import { kv, kvm, ns } from "./index";
 
 dotenv.config();
 
@@ -17,7 +14,7 @@ let namespaceId: string = "";
 
 describe("Testing CF KV APIs", () => {
   test("namespace: create", async () => {
-    const response = await namespace.create({
+    const response = await ns.create({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       title: randomTitle1,
@@ -35,7 +32,7 @@ describe("Testing CF KV APIs", () => {
     namespaceId = response.data?.result.id ?? "";
   });
   test("namespace: get", async () => {
-    const response = await namespace.get({
+    const response = await ns.get({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -52,7 +49,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("namespace: list", async () => {
-    const response = await namespace.list({
+    const response = await ns.list({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
     });
@@ -66,7 +63,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("namespace: rename", async () => {
-    const response = await namespace.rename({
+    const response = await ns.rename({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -82,7 +79,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("kv_pairs/multi: write", async () => {
-    const response = await kv_pair_multi.write({
+    const response = await kvm.write({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -107,7 +104,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("kv_pairs/multi: remove", async () => {
-    const response = await kv_pair_multi.remove({
+    const response = await kvm.remove({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -123,7 +120,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("kv_pairs: write", async () => {
-    const response = await kv_pair.write({
+    const response = await kv.write({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -143,7 +140,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("kv_pairs: read", async () => {
-    const response = await kv_pair.read({
+    const response = await kv.read({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -159,8 +156,8 @@ describe("Testing CF KV APIs", () => {
       throw error;
     }
   });
-  test("key: list", async () => {
-    const response = await key.list({
+  test("kv_pairs: list", async () => {
+    const response = await kv.list({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -175,8 +172,8 @@ describe("Testing CF KV APIs", () => {
       throw error;
     }
   });
-  test("key: metadata", async () => {
-    const response = await key.metadata({
+  test("kv_pairs: metadata", async () => {
+    const response = await kv.metadata({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -193,7 +190,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("kv_pairs: remove", async () => {
-    const response = await kv_pair.remove({
+    const response = await kv.remove({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
@@ -209,7 +206,7 @@ describe("Testing CF KV APIs", () => {
     }
   });
   test("namespace: remove", async () => {
-    const response = await namespace.remove({
+    const response = await ns.remove({
       accountId: ACCOUNT_ID,
       authToken: AUTH_TOKEN,
       namespaceId: namespaceId,
