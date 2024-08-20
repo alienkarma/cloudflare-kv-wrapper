@@ -10,7 +10,7 @@ __export(kv_exports, {
   list: () => list_default,
   metadata: () => metadata_default,
   read: () => read_default,
-  remove: () => delete_default,
+  remove: () => remove_default,
   write: () => write_default
 });
 
@@ -32,10 +32,10 @@ var ENDPOINTS = {
     LIST: `${NAMESPACE_ENDPOINT}/keys`,
     METADATA: `${NAMESPACE_ENDPOINT}/metadata/{key_name}`,
     MULTI: {
-      DELETE: `${KV_PAIRS_BULK_ENDPOINT}`,
+      REMOVE: `${KV_PAIRS_BULK_ENDPOINT}`,
       WRITE: `${KV_PAIRS_BULK_ENDPOINT}`
     },
-    DELETE: `${KV_PAIRS_ENDPOINT}`,
+    REMOVE: `${KV_PAIRS_ENDPOINT}`,
     READ: `${KV_PAIRS_ENDPOINT}`,
     WRITE: `${KV_PAIRS_ENDPOINT}`
   }
@@ -88,14 +88,14 @@ var write_default = async ({
   return { status, statusText, data };
 };
 
-// src/kv/delete.ts
-var delete_default = async ({
+// src/kv/remove.ts
+var remove_default = async ({
   accountId,
   authToken,
   namespaceId,
   keyName
 }) => {
-  const url = ENDPOINTS.KV_PAIR.DELETE.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
+  const url = ENDPOINTS.KV_PAIR.REMOVE.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
@@ -164,7 +164,7 @@ var metadata_default = async ({
 // src/kv/multi/index.ts
 var multi_exports = {};
 __export(multi_exports, {
-  remove: () => delete_default2,
+  remove: () => remove_default2,
   write: () => write_default2
 });
 
@@ -193,14 +193,14 @@ var write_default2 = async ({
   return { status, statusText, data };
 };
 
-// src/kv/multi/delete.ts
-var delete_default2 = async ({
+// src/kv/multi/remove.ts
+var remove_default2 = async ({
   accountId,
   authToken,
   namespaceId,
   body
 }) => {
-  const url = ENDPOINTS.KV_PAIR.MULTI.DELETE.replace(
+  const url = ENDPOINTS.KV_PAIR.MULTI.REMOVE.replace(
     "{account_id}",
     accountId
   ).replace("{namespace_id}", namespaceId);
@@ -224,7 +224,7 @@ __export(namespace_exports, {
   create: () => create_default,
   get: () => get_default,
   list: () => list_default2,
-  remove: () => remove_default,
+  remove: () => remove_default3,
   rename: () => rename_default
 });
 
@@ -302,7 +302,7 @@ var list_default2 = async ({
 };
 
 // src/namespace/remove.ts
-var remove_default = async ({
+var remove_default3 = async ({
   accountId,
   authToken,
   namespaceId

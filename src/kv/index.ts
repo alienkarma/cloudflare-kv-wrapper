@@ -1,6 +1,6 @@
 import read from "./read";
 import write from "./write";
-import remove from "./delete";
+import remove from "./remove";
 import list from "./list";
 import metadata from "./metadata";
 

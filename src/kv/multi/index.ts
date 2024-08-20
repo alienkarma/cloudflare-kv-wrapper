@@ -1,4 +1,4 @@
 import write from "./write";
-import remove from "./delete";
+import remove from "./remove";
 
 export { write, remove };

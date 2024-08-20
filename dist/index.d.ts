@@ -32,19 +32,19 @@ interface WriteResponse$1 {
 }
 declare const _default$a: ({ accountId, authToken, namespaceId, keyName, metadata, value, }: Write$1) => Promise<Response<WriteResponse$1>>;
 
-interface Delete$1 {
+interface Remove$2 {
     accountId: string;
     authToken: string;
     namespaceId: string;
     keyName: string;
 }
-interface DeleteResponse$1 {
+interface RemoveResponse$2 {
     errors: Message[];
     messages: Message[];
     success: boolean;
     result: {};
 }
-declare const _default$9: ({ accountId, authToken, namespaceId, keyName, }: Delete$1) => Promise<Response<DeleteResponse$1>>;
+declare const _default$9: ({ accountId, authToken, namespaceId, keyName, }: Remove$2) => Promise<Response<RemoveResponse$2>>;
 
 interface List$1 {
     accountId: string;
@@ -110,19 +110,19 @@ interface WriteResponse {
 }
 declare const _default$6: ({ accountId, authToken, namespaceId, body, }: Write) => Promise<Response<WriteResponse>>;
 
-interface Delete {
+interface Remove$1 {
     accountId: string;
     authToken: string;
     namespaceId: string;
     body: string[];
 }
-interface DeleteResponse {
+interface RemoveResponse$1 {
     errors: Message[];
     messages: Message[];
     success: boolean;
     result: {};
 }
-declare const _default$5: ({ accountId, authToken, namespaceId, body, }: Delete) => Promise<Response<DeleteResponse>>;
+declare const _default$5: ({ accountId, authToken, namespaceId, body, }: Remove$1) => Promise<Response<RemoveResponse$1>>;
 
 declare namespace index$1 {
   export { _default$5 as remove, _default$6 as write };
@@ -223,14 +223,14 @@ type types$2_Metadata = Metadata;
 type types$2_MetadataResponse = MetadataResponse;
 type types$2_Read = Read;
 declare namespace types$2 {
-  export type { List$1 as List, ListResponse$1 as ListResponse, types$2_Metadata as Metadata, types$2_MetadataResponse as MetadataResponse, types$2_Read as Read, Delete$1 as Remove, DeleteResponse$1 as RemoveResponse, Write$1 as Write, WriteResponse$1 as WriteResponse };
+  export type { List$1 as List, ListResponse$1 as ListResponse, types$2_Metadata as Metadata, types$2_MetadataResponse as MetadataResponse, types$2_Read as Read, Remove$2 as Remove, RemoveResponse$2 as RemoveResponse, Write$1 as Write, WriteResponse$1 as WriteResponse };
 }
 
 type types$1_Write = Write;
 type types$1_WriteKVPair = WriteKVPair;
 type types$1_WriteResponse = WriteResponse;
 declare namespace types$1 {
-  export type { Delete as Remove, DeleteResponse as RemoveResponse, types$1_Write as Write, types$1_WriteKVPair as WriteKVPair, types$1_WriteResponse as WriteResponse };
+  export type { Remove$1 as Remove, RemoveResponse$1 as RemoveResponse, types$1_Write as Write, types$1_WriteKVPair as WriteKVPair, types$1_WriteResponse as WriteResponse };
 }
 
 type types_Create = Create;

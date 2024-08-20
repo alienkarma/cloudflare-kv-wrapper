@@ -1,13 +1,13 @@
 import { ENDPOINTS, Message, Response } from "../../config";
 
-export interface Delete {
+export interface Remove {
   accountId: string;
   authToken: string;
   namespaceId: string;
   body: string[];
 }
 
-export interface DeleteResponse {
+export interface RemoveResponse {
   errors: Message[];
   messages: Message[];
   success: boolean;
@@ -19,8 +19,8 @@ export default async ({
   authToken,
   namespaceId,
   body,
-}: Delete): Promise<Response<DeleteResponse>> => {
-  const url = ENDPOINTS.KV_PAIR.MULTI.DELETE.replace(
+}: Remove): Promise<Response<RemoveResponse>> => {
+  const url = ENDPOINTS.KV_PAIR.MULTI.REMOVE.replace(
     "{account_id}",
     accountId
   ).replace("{namespace_id}", namespaceId);

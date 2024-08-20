@@ -1,7 +1,7 @@
 import type { WriteKVPair, Write, WriteResponse } from "./write";
 import type {
-  Delete as Remove,
-  DeleteResponse as RemoveResponse,
-} from "./delete";
+  Remove as Remove,
+  RemoveResponse as RemoveResponse,
+} from "./remove";
 
 export type { WriteKVPair, Write, WriteResponse, Remove, RemoveResponse };

@@ -16,10 +16,10 @@ export const ENDPOINTS = {
     LIST: `${NAMESPACE_ENDPOINT}/keys`,
     METADATA: `${NAMESPACE_ENDPOINT}/metadata/{key_name}`,
     MULTI: {
-      DELETE: `${KV_PAIRS_BULK_ENDPOINT}`,
+      REMOVE: `${KV_PAIRS_BULK_ENDPOINT}`,
       WRITE: `${KV_PAIRS_BULK_ENDPOINT}`,
     },
-    DELETE: `${KV_PAIRS_ENDPOINT}`,
+    REMOVE: `${KV_PAIRS_ENDPOINT}`,
     READ: `${KV_PAIRS_ENDPOINT}`,
     WRITE: `${KV_PAIRS_ENDPOINT}`,
   },

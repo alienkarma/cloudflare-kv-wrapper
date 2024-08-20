@@ -1,9 +1,9 @@
 import type { Read } from "./read";
 import type { Write, WriteResponse } from "./write";
 import type {
-  Delete as Remove,
-  DeleteResponse as RemoveResponse,
-} from "./delete";
+  Remove as Remove,
+  RemoveResponse as RemoveResponse,
+} from "./remove";
 import type { List, ListResponse } from "./list";
 import type { Metadata, MetadataResponse } from "./metadata";
 
