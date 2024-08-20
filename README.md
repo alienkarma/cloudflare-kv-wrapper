@@ -419,7 +419,3 @@ KVMTypes.RemoveResponse {
 
 If you face any issues, raise a request and I will try my best to solve it.
 Enjoy! 👍
-
-```
-
-```
