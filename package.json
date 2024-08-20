@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-kv-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A javascript/typescript wrapper for Cloudflare's KV namespaces using REST API",
   "scripts": {
     "test": "jest --watch",
