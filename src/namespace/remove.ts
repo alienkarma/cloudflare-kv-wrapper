@@ -1,9 +1,10 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface Remove {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
 }
 
 export interface RemoveResponse {
@@ -18,15 +19,21 @@ export default async ({
   authToken,
   namespaceId,
 }: Remove): Promise<Response<RemoveResponse>> => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId,
+  });
+
   const url = ENDPOINTS.NAMESPACE.REMOVE.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
 
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json",
     },
   });

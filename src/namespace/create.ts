@@ -1,8 +1,9 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface Create {
-  accountId: string;
-  authToken: string;
+  accountId?: string;
+  authToken?: string;
   title: string;
 }
 
@@ -22,12 +23,20 @@ export default async ({
   authToken,
   title,
 }: Create): Promise<Response<CreateResponse>> => {
-  const url = ENDPOINTS.NAMESPACE.CREATE.replace("{account_id}", accountId);
+  const vars = loadVariables({
+    accountId,
+    authToken,
+  });
+
+  const url = ENDPOINTS.NAMESPACE.CREATE.replace(
+    "{account_id}",
+    vars.accountId
+  );
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ title }),

@@ -1,9 +1,10 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface Get {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
 }
 
 export interface GetResponse {
@@ -22,15 +23,21 @@ export default async ({
   authToken,
   namespaceId,
 }: Get): Promise<Response<GetResponse>> => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId,
+  });
+
   const url = ENDPOINTS.NAMESPACE.GET.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
 
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json",
     },
   });

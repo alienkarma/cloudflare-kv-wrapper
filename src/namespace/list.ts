@@ -1,8 +1,9 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface List {
-  accountId: string;
-  authToken: string;
+  accountId?: string;
+  authToken?: string;
   direction?: "asc" | "desc";
   order?: "id" | "title";
   page?: number;
@@ -34,6 +35,11 @@ export default async ({
   page,
   perPage,
 }: List): Promise<Response<ListResponse>> => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+  });
+
   const query: string[] = [];
 
   if (direction) query.push(`direction=${direction}`);
@@ -44,12 +50,13 @@ export default async ({
   const queryString = query.length === 0 ? "" : "?" + query;
 
   const url =
-    ENDPOINTS.NAMESPACE.LIST.replace("{account_id}", accountId) + queryString;
+    ENDPOINTS.NAMESPACE.LIST.replace("{account_id}", vars.accountId) +
+    queryString;
 
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json",
     },
   });

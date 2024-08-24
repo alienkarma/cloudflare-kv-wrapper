@@ -25,6 +25,16 @@ export const ENDPOINTS = {
   },
 };
 
+export const INIT_STATE: {
+  accountId: string;
+  authToken: string;
+  namespaceId: string;
+} = {
+  accountId: "",
+  authToken: "",
+  namespaceId: "",
+};
+
 export interface Message {
   code: number;
   message: string;

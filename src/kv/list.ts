@@ -1,9 +1,10 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface List {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   cursor?: string;
   limit?: number;
   prefix?: string;
@@ -32,6 +33,12 @@ export default async ({
   limit,
   prefix,
 }: List): Promise<Response<ListResponse>> => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId,
+  });
+
   const query: string[] = [];
 
   if (cursor) query.push(`cursor=${cursor}`);
@@ -41,15 +48,15 @@ export default async ({
   const queryString = query.length === 0 ? "" : "?" + query.join("&");
 
   const url =
-    ENDPOINTS.KV_PAIR.LIST.replace("{account_id}", accountId).replace(
+    ENDPOINTS.KV_PAIR.LIST.replace("{account_id}", vars.accountId).replace(
       "{namespace_id}",
-      namespaceId
+      vars.namespaceId
     ) + queryString;
 
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json",
     },
   });

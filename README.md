@@ -53,6 +53,19 @@ npm install cloudflare-kv-wrapper
 Import the appropriate module for use.
 You can also import their relevant types.
 
+<p><strong>Initialize</strong>
+Used for setting the account ID and auth token for the KV namespace. Can optionally define a namespace ID as well.</p>
+
+```ts
+import { init } from "cloudflare-kv-wrapper";
+
+init({
+  accountId: "your-account-id",
+  authToken: "your-auth-token",
+  namespaceId: "your-optional-namespace-id",
+});
+```
+
 <p><strong>Namespaces</strong>
 Used for handling KV namespaces. It is best to create a namespace from the cloudflare dashboard and use its ID directly in your code</p>
 
@@ -93,7 +106,9 @@ For usage examples, check out the [/example](/example) folder.
 
 ## 🦾 API
 
-All functions are async functions and are fully type-supported. Each function's source API link is attached as well for further queries.
+All functions are async functions and are fully type-supported. Each function's source API link is attached as well for further queries. You can provide the credentials and/or namespace ID beforehand using the `init` function or provide them as parameters in each function call.
+
+### init
 
 ### Namespaces : create [[source]](https://developers.cloudflare.com/api/operations/workers-kv-namespace-create-a-namespace)
 
@@ -104,8 +119,8 @@ ns.create();
 
 // Parameters
 NSTypes.Create {
-  accountId: string;
-  authToken: string;
+  accountId?: string;
+  authToken?: string;
   title: string;
 }
 
@@ -131,9 +146,9 @@ ns.get();
 
 // Parameters
 NSTypes.Get {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
 }
 
 // Response
@@ -158,8 +173,8 @@ ns.list();
 
 // Parameters
 NSTypes.List {
-  accountId: string;
-  authToken: string;
+  accountId?: string;
+  authToken?: string;
 }
 
 // Response
@@ -185,9 +200,9 @@ ns.remove();
 
 // Parameters
 NSTypes.Remove {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
 }
 
 // Response
@@ -207,9 +222,9 @@ ns.rename();
 
 // Parameters
 NSTypes.Rename {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   title: string;
 }
 
@@ -235,9 +250,9 @@ kv.list();
 
 // Parameters
 KVTypes.List {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
 }
 
 // Response
@@ -260,9 +275,9 @@ kv.metadata();
 
 // Parameters
 KVTypes.Metadata {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   key: string;
 }
 
@@ -291,9 +306,9 @@ kv.read();
 
 // Parameters
 KVTypes.Read {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   key: string;
 }
 
@@ -320,9 +335,9 @@ kv.write();
 
 // Parameters
 KVTypes.Write {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   key: string;
   value: string;
   metadata: {
@@ -349,9 +364,9 @@ kv.remove();
 
 // Parameters
 KVTypes.Remove {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   key: string;
 }
 
@@ -372,9 +387,9 @@ kvm.write();
 
 // Parameters
 KVMTypes.Write {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   keys: string[];
 }
 
@@ -401,9 +416,9 @@ kvm.remove();
 
 // Parameters
 KVMTypes.Remove {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   keys: string[];
 }
 

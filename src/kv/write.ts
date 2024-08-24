@@ -1,9 +1,10 @@
 import { ENDPOINTS, Message, Response } from "../config";
+import { loadVariables } from "../util";
 
 export interface Write {
-  accountId: string;
-  authToken: string;
-  namespaceId: string;
+  accountId?: string;
+  authToken?: string;
+  namespaceId?: string;
   keyName: string;
   metadata: Record<string, string>;
   value: string;
@@ -24,8 +25,14 @@ export default async ({
   metadata,
   value,
 }: Write): Promise<Response<WriteResponse>> => {
-  const url = ENDPOINTS.KV_PAIR.WRITE.replace("{account_id}", accountId)
-    .replace("{namespace_id}", namespaceId)
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId,
+  });
+
+  const url = ENDPOINTS.KV_PAIR.WRITE.replace("{account_id}", vars.accountId)
+    .replace("{namespace_id}", vars.namespaceId)
     .replace("{key_name}", keyName);
 
   const body = new FormData();
@@ -35,7 +42,7 @@ export default async ({
   const response = await fetch(url, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
     },
     body,
   });

@@ -48,3 +48,11 @@ const readHelloWorld = async () => {
     console.error("Failed to read 'hello'");
   }
 };
+
+// Run the functions
+const main = async () => {
+  await saveHelloWorld();
+  await readHelloWorld();
+};
+
+main();
