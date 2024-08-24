@@ -22,21 +22,12 @@ __export(src_exports, {
   KVMTypes: () => types_exports2,
   KVTypes: () => types_exports,
   NSTypes: () => types_exports3,
+  init: () => init,
   kv: () => kv_exports,
   kvm: () => multi_exports,
   ns: () => namespace_exports
 });
 module.exports = __toCommonJS(src_exports);
-
-// src/kv/index.ts
-var kv_exports = {};
-__export(kv_exports, {
-  list: () => list_default,
-  metadata: () => metadata_default,
-  read: () => read_default,
-  remove: () => remove_default,
-  write: () => write_default
-});
 
 // src/config.ts
 var BASE_ENDPOINT = "https://api.cloudflare.com/client/v4";
@@ -64,6 +55,38 @@ var ENDPOINTS = {
     WRITE: `${KV_PAIRS_ENDPOINT}`
   }
 };
+var INIT_STATE = {
+  accountId: "",
+  authToken: "",
+  namespaceId: ""
+};
+
+// src/kv/index.ts
+var kv_exports = {};
+__export(kv_exports, {
+  list: () => list_default,
+  metadata: () => metadata_default,
+  read: () => read_default,
+  remove: () => remove_default,
+  write: () => write_default
+});
+
+// src/util.ts
+var loadVariables = ({
+  accountId,
+  authToken,
+  namespaceId
+}) => {
+  const state = {
+    accountId: "",
+    authToken: "",
+    namespaceId: ""
+  };
+  state.accountId = accountId || INIT_STATE.accountId;
+  state.authToken = authToken || INIT_STATE.authToken;
+  state.namespaceId = namespaceId || INIT_STATE.namespaceId;
+  return state;
+};
 
 // src/kv/read.ts
 var read_default = async ({
@@ -72,11 +95,16 @@ var read_default = async ({
   namespaceId,
   keyName
 }) => {
-  const url = ENDPOINTS.KV_PAIR.READ.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
+  const url = ENDPOINTS.KV_PAIR.READ.replace("{account_id}", vars.accountId).replace("{namespace_id}", vars.namespaceId).replace("{key_name}", keyName);
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -95,14 +123,19 @@ var write_default = async ({
   metadata,
   value
 }) => {
-  const url = ENDPOINTS.KV_PAIR.WRITE.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
+  const url = ENDPOINTS.KV_PAIR.WRITE.replace("{account_id}", vars.accountId).replace("{namespace_id}", vars.namespaceId).replace("{key_name}", keyName);
   const body = new FormData();
   body.append("metadata", JSON.stringify(metadata));
   body.append("value", value);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${vars.authToken}`
     },
     body
   });
@@ -119,11 +152,16 @@ var remove_default = async ({
   namespaceId,
   keyName
 }) => {
-  const url = ENDPOINTS.KV_PAIR.REMOVE.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
+  const url = ENDPOINTS.KV_PAIR.REMOVE.replace("{account_id}", vars.accountId).replace("{namespace_id}", vars.namespaceId).replace("{key_name}", keyName);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -142,19 +180,24 @@ var list_default = async ({
   limit,
   prefix
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const query = [];
   if (cursor) query.push(`cursor=${cursor}`);
   if (limit) query.push(`limit=${limit}`);
   if (prefix) query.push(`prefix=${prefix}`);
   const queryString = query.length === 0 ? "" : "?" + query.join("&");
-  const url = ENDPOINTS.KV_PAIR.LIST.replace("{account_id}", accountId).replace(
+  const url = ENDPOINTS.KV_PAIR.LIST.replace("{account_id}", vars.accountId).replace(
     "{namespace_id}",
-    namespaceId
+    vars.namespaceId
   ) + queryString;
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -171,11 +214,16 @@ var metadata_default = async ({
   namespaceId,
   keyName
 }) => {
-  const url = ENDPOINTS.KV_PAIR.METADATA.replace("{account_id}", accountId).replace("{namespace_id}", namespaceId).replace("{key_name}", keyName);
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
+  const url = ENDPOINTS.KV_PAIR.METADATA.replace("{account_id}", vars.accountId).replace("{namespace_id}", vars.namespaceId).replace("{key_name}", keyName);
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -199,14 +247,19 @@ var write_default2 = async ({
   namespaceId,
   body
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const url = ENDPOINTS.KV_PAIR.MULTI.WRITE.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
@@ -224,14 +277,19 @@ var remove_default2 = async ({
   namespaceId,
   body
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const url = ENDPOINTS.KV_PAIR.MULTI.REMOVE.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
@@ -258,11 +316,18 @@ var create_default = async ({
   authToken,
   title
 }) => {
-  const url = ENDPOINTS.NAMESPACE.CREATE.replace("{account_id}", accountId);
+  const vars = loadVariables({
+    accountId,
+    authToken
+  });
+  const url = ENDPOINTS.NAMESPACE.CREATE.replace(
+    "{account_id}",
+    vars.accountId
+  );
   const response = await fetch(url, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ title })
@@ -279,14 +344,19 @@ var get_default = async ({
   authToken,
   namespaceId
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const url = ENDPOINTS.NAMESPACE.GET.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -305,17 +375,21 @@ var list_default2 = async ({
   page,
   perPage
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken
+  });
   const query = [];
   if (direction) query.push(`direction=${direction}`);
   if (order) query.push(`order=${order}`);
   if (page) query.push(`page=${page}`);
   if (perPage) query.push(`per_page=${perPage}`);
   const queryString = query.length === 0 ? "" : "?" + query;
-  const url = ENDPOINTS.NAMESPACE.LIST.replace("{account_id}", accountId) + queryString;
+  const url = ENDPOINTS.NAMESPACE.LIST.replace("{account_id}", vars.accountId) + queryString;
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -331,14 +405,19 @@ var remove_default3 = async ({
   authToken,
   namespaceId
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const url = ENDPOINTS.NAMESPACE.REMOVE.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     }
   });
@@ -355,14 +434,19 @@ var rename_default = async ({
   namespaceId,
   title
 }) => {
+  const vars = loadVariables({
+    accountId,
+    authToken,
+    namespaceId
+  });
   const url = ENDPOINTS.NAMESPACE.RENAME.replace(
     "{account_id}",
-    accountId
-  ).replace("{namespace_id}", namespaceId);
+    vars.accountId
+  ).replace("{namespace_id}", vars.namespaceId);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${vars.authToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ title })
@@ -381,11 +465,19 @@ var types_exports2 = {};
 
 // src/namespace/types.ts
 var types_exports3 = {};
+
+// src/index.ts
+var init = ({ accountId, authToken, namespaceId }) => {
+  INIT_STATE.accountId = accountId;
+  INIT_STATE.authToken = authToken;
+  INIT_STATE.namespaceId = namespaceId || "";
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   KVMTypes,
   KVTypes,
   NSTypes,
+  init,
   kv,
   kvm,
   ns

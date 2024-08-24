@@ -1,3 +1,9 @@
+interface Variables {
+    accountId: string;
+    authToken: string;
+    namespaceId?: string;
+}
+
 interface Message {
     code: number;
     message: string;
@@ -9,17 +15,17 @@ interface Response<T> {
 }
 
 interface Read {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     keyName: string;
 }
 declare const _default$b: ({ accountId, authToken, namespaceId, keyName, }: Read) => Promise<Response<any>>;
 
 interface Write$1 {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     keyName: string;
     metadata: Record<string, string>;
     value: string;
@@ -33,9 +39,9 @@ interface WriteResponse$1 {
 declare const _default$a: ({ accountId, authToken, namespaceId, keyName, metadata, value, }: Write$1) => Promise<Response<WriteResponse$1>>;
 
 interface Remove$2 {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     keyName: string;
 }
 interface RemoveResponse$2 {
@@ -47,9 +53,9 @@ interface RemoveResponse$2 {
 declare const _default$9: ({ accountId, authToken, namespaceId, keyName, }: Remove$2) => Promise<Response<RemoveResponse$2>>;
 
 interface List$1 {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     cursor?: string;
     limit?: number;
     prefix?: string;
@@ -71,9 +77,9 @@ interface ListResponse$1 {
 declare const _default$8: ({ accountId, authToken, namespaceId, cursor, limit, prefix, }: List$1) => Promise<Response<ListResponse$1>>;
 
 interface Metadata {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     keyName: string;
 }
 interface MetadataResponse {
@@ -97,9 +103,9 @@ interface WriteKVPair {
     metadata?: Record<string, string>;
 }
 interface Write {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     body: WriteKVPair[];
 }
 interface WriteResponse {
@@ -111,9 +117,9 @@ interface WriteResponse {
 declare const _default$6: ({ accountId, authToken, namespaceId, body, }: Write) => Promise<Response<WriteResponse>>;
 
 interface Remove$1 {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     body: string[];
 }
 interface RemoveResponse$1 {
@@ -129,8 +135,8 @@ declare namespace index$1 {
 }
 
 interface Create {
-    accountId: string;
-    authToken: string;
+    accountId?: string;
+    authToken?: string;
     title: string;
 }
 interface CreateResponse {
@@ -146,9 +152,9 @@ interface CreateResponse {
 declare const _default$4: ({ accountId, authToken, title, }: Create) => Promise<Response<CreateResponse>>;
 
 interface Get {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
 }
 interface GetResponse {
     errors: Message[];
@@ -163,8 +169,8 @@ interface GetResponse {
 declare const _default$3: ({ accountId, authToken, namespaceId, }: Get) => Promise<Response<GetResponse>>;
 
 interface List {
-    accountId: string;
-    authToken: string;
+    accountId?: string;
+    authToken?: string;
     direction?: "asc" | "desc";
     order?: "id" | "title";
     page?: number;
@@ -189,9 +195,9 @@ interface ListResponse {
 declare const _default$2: ({ accountId, authToken, direction, order, page, perPage, }: List) => Promise<Response<ListResponse>>;
 
 interface Remove {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
 }
 interface RemoveResponse {
     errors: Message[];
@@ -202,9 +208,9 @@ interface RemoveResponse {
 declare const _default$1: ({ accountId, authToken, namespaceId, }: Remove) => Promise<Response<RemoveResponse>>;
 
 interface Rename {
-    accountId: string;
-    authToken: string;
-    namespaceId: string;
+    accountId?: string;
+    authToken?: string;
+    namespaceId?: string;
     title: string;
 }
 interface RenameResponse {
@@ -247,4 +253,6 @@ declare namespace types {
   export type { types_Create as Create, types_CreateResponse as CreateResponse, types_Get as Get, types_GetResponse as GetResponse, types_List as List, types_ListResponse as ListResponse, types_Remove as Remove, types_RemoveResponse as RemoveResponse, types_Rename as Rename, types_RenameResponse as RenameResponse };
 }
 
-export { types$1 as KVMTypes, types$2 as KVTypes, types as NSTypes, index$2 as kv, index$1 as kvm, index as ns };
+declare const init: ({ accountId, authToken, namespaceId }: Variables) => void;
+
+export { types$1 as KVMTypes, types$2 as KVTypes, types as NSTypes, init, index$2 as kv, index$1 as kvm, index as ns };
